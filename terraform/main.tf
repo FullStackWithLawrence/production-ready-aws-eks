@@ -79,3 +79,14 @@ module "ingress_controller" {
 
   depends_on = [module.eks]
 }
+
+module "ingress_karpenter" {
+  source = "../modules/kubernetes_karpenter"
+
+  shared_resource_name = var.shared_resource_name
+  service_node_group_iam_role_name = module.eks.service_node_group_iam_role_name
+  service_node_group_iam_role_arn = module.eks.service_node_group_iam_role_arn
+  oidc_provider_arn = module.eks.oidc_provider_arn
+
+  depends_on = [module.eks]
+}

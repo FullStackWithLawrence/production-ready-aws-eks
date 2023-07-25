@@ -5,7 +5,7 @@
 
 # The Most Important Kubernetes Video You'll Ever Watch
 
-Terraform scaffolding to create a production-ready Kubernetes cluster running inside its own VPC. Also installs and configures commonly needed packages including:
+Terraform scaffolding to create a production-ready Kubernetes cluster running inside its own VPC. Sets up spot pricing for EC2 instances, and installs and configures commonly needed packages including:
 
 - nginx-ingress-controller
 - cert-manager

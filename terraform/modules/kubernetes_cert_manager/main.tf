@@ -51,7 +51,7 @@ data "template_file" "cert-manager-values" {
 resource "aws_iam_policy" "cert_manager_policy" {
   name        = "${var.namespace}-cert-manager-policy"
   path        = "/"
-  description = "cookiecutter: Policy, which allows CertManager to create Route53 records"
+  description = "Policy, which allows CertManager to create Route53 records"
 
   policy = jsonencode({
     "Version" : "2012-10-17",
