@@ -5,6 +5,8 @@
 
 # The Most Important Kubernetes Video You'll Ever Watch
 
+This is the source code for FullStackWithLawrence Youtube Video -- "????".
+
 Terraform scaffolding to create a production-ready Kubernetes cluster running inside its own VPC. Sets up spot pricing for EC2 instances, and installs and configures commonly needed packages including:
 
 - nginx-ingress-controller
@@ -13,7 +15,21 @@ Terraform scaffolding to create a production-ready Kubernetes cluster running in
 - prometheus
 - vertical pod autoscaler (vpa)
 
-This is the source code for FullStackWithLawrence Youtube Video -- "????".
+Consists of the following source code: 
+
+```console
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+HCL                             39            318            457           1410
+Text                             1            118              0            553
+Markdown                         2            101              0            260
+JSON                             1              0              0            176
+YAML                            10              1              3            163
+-------------------------------------------------------------------------------
+SUM:                            53            538            460           2562
+-------------------------------------------------------------------------------
+```
 
 ## Usage
 
