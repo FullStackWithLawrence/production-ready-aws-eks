@@ -64,6 +64,7 @@ This EKS application stack consists of the following:
 * Kubernetes [Prometheus](https://prometheus.io/)
 * Kubernetes [cert-manager](https://cert-manager.io/)
 * Kubernetes [Nginx Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/)
+* Kubernetes [Karpenter](https://karpenter.sh/)
 
 **WARNINGS**:
 
