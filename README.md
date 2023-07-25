@@ -143,7 +143,23 @@ $ AWS_REGION=us-east-1          # any valid AWS region code.
 $ AWS_ENVIRONMENT=fswl          # any valid string. Keep it short -- 3 characters is ideal.
 ```
 
-First create an AWS S3 Bucket
+To verify your AWS CLI identify
+
+```console
+aws --version
+aws sts get-caller-identity
+```
+
+If necessary you can force the aws cli to recoginize your aws profile name with this command.
+
+```console
+echo AWS_PROFILE=default
+aws sts get-caller-identity
+```
+
+The IAM user returned in the console output should match the IAM username you set above.
+
+Next create an AWS S3 Bucket
 
 ```console
 $ AWS_S3_BUCKET="${AWS_ACCOUNT}-terraform-tfstate-${AWS_ENVIRONMENT}"
@@ -241,6 +257,8 @@ $ terraform init
 
 Screen output should resemble the following:
 
+![terraform-plan](https://github.com/FullStackWithLawrence/010-most-important-kubernetes-video/blob/main/doc/terraform-plan.png)
+
 To deploy all resources run the following
 
 ```console
@@ -255,6 +273,50 @@ $ terraform apply -target=module.metricsserver
 $ terraform apply -target=module.prometheus
 $ terraform apply -target=module.ingress_controller
 ```
+
+### Step 5. Interact with the AWS EKS Kubernetes cluster
+
+the AWS CLI provides a handy command-line tool for configuring kubectl for your new AWS EKS Kubernetes cluster. 
+
+```console
+$ AWS_REGION=us-east-1
+$ EKS_CLUSTER_NAME=fswl
+$ aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME --alias $EKS_CLUSTER_NAME
+```
+
+Afterwards, you can use k9s, a text-based gui, to view and interact with Kubernetes resources. k9s relies on kubectl to
+communicate with the AWS EKS Kuberenetes cluster.
+
+```console
+$ k9s
+```
+![Up and Running](https://github.com/FullStackWithLawrence/010-most-important-kubernetes-video/blob/main/doc/up-and-running.png)
+
+
+Use this command to verify that kubectl can access Kubernetes cluster resources.
+
+```console
+$ kubectl get namespaces
+NAME                 STATUS   AGE
+default              Active   3h
+ingress-controller   Active   101m
+kube-node-lease      Active   3h
+kube-public          Active   3h
+kube-system          Active   3h
+metrics-server       Active   106m
+prometheus           Active   105m
+vpa                  Active   106m
+```
+
+Run k9s from your command line
+
+```console
+$ k9s
+```
+
+After successfully running the Terraform script the k9s home screen should look similiar to the following:
+
+![k9s home screen](https://raw.githubusercontent.com/QueriumCorp/WAS-Kubernetes/querium/EnvironmentSetup/AWS/doc/k8s-environment.png "K9s Home Screen")
 
 ### Trouble Shooting
 
@@ -304,49 +366,6 @@ You can optionally execute the Terraform scripts without a lock, as follows:
 $ terraform apply -lock=false
 ```
 
-### Step 5. Interact with the AWS EKS Kubernetes cluster
-
-You can use k9s, a text-based gui, to view and interact with Kubernetes resources. k9s relies on kubectl to
-communicate with the AWS EKS Kuberenetes cluster.
-
-```console
-$ k9s
-```
-
-If necessary, you can use the following command to refresh your kubectl authentication resources.
-
-First, configure kubectl to connect to your AWS EKS Kubernetes cluster.
-
-```console
-$ AWS_REGION=us-east-1
-$ EKS_CLUSTER_NAME=fswl
-$ aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME --alias $EKS_CLUSTER_NAME
-```
-
-Use this command to verify that kubectl can access Kubernetes cluster resources.
-
-```console
-$ kubectl get namespaces
-NAME                 STATUS   AGE
-default              Active   3h
-ingress-controller   Active   101m
-kube-node-lease      Active   3h
-kube-public          Active   3h
-kube-system          Active   3h
-metrics-server       Active   106m
-prometheus           Active   105m
-vpa                  Active   106m
-```
-
-Run k9s from your command line
-
-```console
-$ k9s
-```
-
-After successfully running the Terraform script the k9s home screen should look similiar to the following:
-
-![k9s home screen](https://raw.githubusercontent.com/QueriumCorp/WAS-Kubernetes/querium/EnvironmentSetup/AWS/doc/k8s-environment.png "K9s Home Screen")
 
 ## Contributing
 
@@ -364,5 +383,5 @@ foo@bar:~$
 foo@bar:~$ pre-commit
 ```
 
-![pre-commit output](https://github.com/FullStackWithLawrence/009-scikit-learn-random-forest/blob/main/doc/pre-commit.png)
+![pre-commit output](https://github.com/FullStackWithLawrence/010-most-important-kubernetes-video/blob/main/doc/pre-commit.png)
 

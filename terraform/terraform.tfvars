@@ -15,14 +15,14 @@ domain      = "lawrencemcdaniel.com"
 shared_resource_name = "fswl"
 aws_auth_users = [
   {
-    userarn  = "arn:aws:iam::320713933456:user/mcdaniel"
+    userarn  = "arn:aws:iam::090511222473:user/mcdaniel"
     username = "mcdaniel"
     groups   = ["system:masters"]
   }
 ]
 
 kms_key_owners = [
-  "arn:aws:iam::320713933456:user/mcdaniel"
+  "arn:aws:iam::090511222473:user/mcdaniel"
 ]
 tags = {
   Terraform   = "true"
