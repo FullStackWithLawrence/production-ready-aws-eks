@@ -14,7 +14,7 @@
 #------------------------------------------------------------------------------
 
 module "eks" {
-  source = "../modules/eks"
+  source = "./modules/eks"
 
   root_domain          = var.domain
   domain               = "${var.shared_resource_name}.${var.domain}"
@@ -40,13 +40,13 @@ module "eks" {
 }
 
 module "vpa" {
-  source = "../modules/kubernetes_vpa"
+  source = "./modules/kubernetes_vpa"
 
   depends_on = [module.eks]
 }
 
 module "cert_manager" {
-  source = "../modules/kubernetes_cert_manager"
+  source = "./modules/kubernetes_cert_manager"
 
   domain     = "${var.shared_resource_name}.${var.domain}"
   namespace  = var.shared_resource_name
@@ -57,14 +57,14 @@ module "cert_manager" {
 }
 
 module "metricsserver" {
-  source = "../modules/kubernetes_metricsserver"
+  source = "./modules/kubernetes_metricsserver"
 
   depends_on = [module.eks]
 }
 
 
 module "prometheus" {
-  source = "../modules/kubernetes_prometheus"
+  source = "./modules/kubernetes_prometheus"
 
   domain         = "${var.shared_resource_name}.${var.domain}"
   cluster_issuer = "${var.shared_resource_name}.${var.domain}"
@@ -73,7 +73,7 @@ module "prometheus" {
 }
 
 module "ingress_controller" {
-  source = "../modules/kubernetes_ingress_controller"
+  source = "./modules/kubernetes_ingress_controller"
 
   domain = "${var.shared_resource_name}.${var.domain}"
 
@@ -81,7 +81,7 @@ module "ingress_controller" {
 }
 
 module "ingress_karpenter" {
-  source = "../modules/kubernetes_karpenter"
+  source = "./modules/kubernetes_karpenter"
 
   shared_resource_name = var.shared_resource_name
   service_node_group_iam_role_name = module.eks.service_node_group_iam_role_name

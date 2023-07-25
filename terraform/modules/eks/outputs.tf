@@ -161,6 +161,13 @@ output "eks_managed_node_groups" {
   value       = module.eks.eks_managed_node_groups
 }
 
+output "service_node_group_iam_role_name" {
+  value = module.eks.eks_managed_node_groups["eks"].iam_role_name
+}
+output "service_node_group_iam_role_arn" {
+  value = module.eks.eks_managed_node_groups["eks"].iam_role_arn
+}
+
 ################################################################################
 # Self Managed Node Group
 ################################################################################

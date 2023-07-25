@@ -138,7 +138,7 @@ Use these three environment variables for creating the uniquely named resources 
 
 ```console
 $ AWS_ACCOUNT=012345678912      # add your 12-digit AWS account number here
-$
+$ AWS_PROFILE=default           # any valid aws cli profile name
 $ AWS_REGION=us-east-1          # any valid AWS region code.
 $ AWS_ENVIRONMENT=fswl          # any valid string. Keep it short -- 3 characters is ideal.
 ```
@@ -147,14 +147,14 @@ First create an AWS S3 Bucket
 
 ```console
 $ AWS_S3_BUCKET="${AWS_ACCOUNT}-terraform-tfstate-${AWS_ENVIRONMENT}"
-$ aws s3api create-bucket --bucket $AWS_S3_BUCKET --region $AWS_REGION
+$ aws s3api create-bucket --bucket $AWS_S3_BUCKET --region $AWS_REGION --profile $AWS_PROFILE
 ```
 
 Then create a DynamoDB table
 
 ```console
 $ AWS_DYNAMODB_TABLE="terraform-state-lock-${AWS_ENVIRONMENT}"
-$ aws dynamodb create-table --region $AWS_REGION --table-name $AWS_DYNAMODB_TABLE  \
+$ aws dynamodb create-table --profile $AWS_PROFILE --region $AWS_REGION --table-name $AWS_DYNAMODB_TABLE  \
                --attribute-definitions AttributeName=LockID,AttributeType=S  \
                --key-schema AttributeName=LockID,KeyType=HASH --provisioned-throughput  \
                ReadCapacityUnits=1,WriteCapacityUnits=1

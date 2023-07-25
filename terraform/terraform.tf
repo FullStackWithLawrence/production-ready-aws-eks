@@ -13,8 +13,8 @@ terraform {
     bucket         = "090511222473-terraform-tfstate-fswl"
     key            = "fswl/terraform.tfstate"
     region         = "us-east-2"
-    dynamodb_table = "terraform-state-lock-was2"
-    profile        = "default"
+    dynamodb_table = "terraform-state-lock-fswl"
+    profile        = "lawrence"
     encrypt        = false
   }
 

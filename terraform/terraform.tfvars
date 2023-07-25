@@ -5,7 +5,7 @@
 ###############################################################################
 account_id  = "090511222473"
 aws_region  = "us-east-1"
-aws_profile = "default"
+aws_profile = "lawrence"
 domain      = "lawrencemcdaniel.com"
 
 
