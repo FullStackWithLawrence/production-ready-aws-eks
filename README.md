@@ -5,7 +5,13 @@
 
 # The Most Important Kubernetes Video You'll Ever Watch
 
-Simple scaffolding to create a production-ready Kubernetes cluster on AWS Elastic Kubernetes Service using Terraform.
+Terraform scaffolding to create a production-ready Kubernetes cluster running inside its own VPC. Also installs and configures commonly needed packages including:
+
+- nginx-ingress-controller
+- cert-manager
+- metrics-server
+- prometheus
+- vertical pod autoscaler (vpa)
 
 This is the source code for FullStackWithLawrence Youtube Video -- "????".
 
