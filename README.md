@@ -18,24 +18,6 @@ foo@bar:~$ terraform init
 foo@bar:~$ terraform apply
 ```
 
-## Contributing
-
-Give back to the open source community! If you have good ideas for how to improve this code then by all means, please seize the day and share your improvements by creating a pull request: fork this repo, make your changes, and then open a pull request; most of which can be done directly from Github.
-
-### Local development
-
-This being the low budget one-man-band operation that it is, I'm reliant on the automated coding style enforcement and syntax checking capabilities of [pre-commit](https://pre-commit.com/), [black](https://pypi.org/project/black/) and [flake8](https://flake8.pycqa.org/), so you'll want to install these amazing tools **prior** to attempting a PR as I've also installed automated [Github Actions](https://github.com/features/actions) [CI](https://en.wikipedia.org/wiki/Continuous_integration) tools that will run these tests on all commits.
-
-```console
-foo@bar:~$ pip install -r requirements-dev.txt
-foo@bar:~$ pre-commit install
-pre-commit installed at .git/hooks/pre-commit
-foo@bar:~$ 
-foo@bar:~$ pre-commit
-```
-
-![pre-commit output](https://github.com/FullStackWithLawrence/009-scikit-learn-random-forest/blob/main/doc/pre-commit.png)
-
 ## How To Setup Your Local Environment
 
 This document describes how to deploy a [Managed Kubernetes Service Cluster](https://aws.amazon.com/eks/) with [AWS cloud infrastructure](https://aws.amazon.com/).
@@ -345,96 +327,21 @@ After successfully running the Terraform script the k9s home screen should look 
 
 ![k9s home screen](https://raw.githubusercontent.com/QueriumCorp/WAS-Kubernetes/querium/EnvironmentSetup/AWS/doc/k8s-environment.png "K9s Home Screen")
 
+## Contributing
 
-## III. WAS Usage
+Give back to the open source community! If you have good ideas for how to improve this code then by all means, please seize the day and share your improvements by creating a pull request: fork this repo, make your changes, and then open a pull request; most of which can be done directly from Github.
 
-### Step 1. Interact with WAS
+### Local development
 
-URL endpoints will be as follows, where <was.example.com> matches your value of services_subdomain above:
-
-* Active Web Elements Server: https://was.example.com/
-* Resource Manager: https://was.example.com/resources/
-* Endpoints Manager: https://was.example.com/endpoints/
-* Nodefiles: https://was.example.com/nodefiles/
-* Endpoints Info: https://was.example.com/.applicationserver/info
-* Restart AWES: https://was.example.com/.applicationserver/kernel/restart
-
-### Step 2. Get a license file from your Wolfram Research sales representative
-
-The WAS home screen will return this error message until you add a valid software license key.
-
-![WAS error screen](https://raw.githubusercontent.com/QueriumCorp/WAS-Kubernetes/querium/EnvironmentSetup/AWS/doc/wolfram-welcome-screen.png "WAS error screen")
-
-
-### Step 3. Install license
-
-This file needs to be deployed to WAS as a node file in the conventional location `.Wolfram/Licensing/mathpass`. From a Wolfram Language client, this may be achieved using the following code:
-
-```javascript
-    was = ServiceConnect["WolframApplicationServer", "https://example.com/"];
-    ServiceExecute[was, "DeployNodeFile",
-    {"Contents"-> File["/path/to/mathpass"], "NodeFile" -> ".Wolfram/Licensing/mathpass"}]
-```
-
-
-
-Alternatively you may use the [node files REST API](../../Documentation/API/NodeFilesManager.md) to install the license file.
-
-**Note:** In order to use the Wolfram Language functions, the WolframApplicationServer paclet must be installed and loaded. Run the following code:
-
-```javascript
-    PacletInstall["WolframApplicationServer"];
-    Needs["WolframApplicationServer`"]
-```
-
-### Step 4. Restart
-
-Restart the application using the [restart API](../../Documentation/API/Utilities.md) to enable your Wolfram Engines.
-
-URL: `https://example.com/.applicationserver/kernel/restart`
-
-The default credentials for this API are:
-
-	Username: applicationserver
-
-	Password: P7g[/Y8v?KR}#YvN
-
-
-To change these, see the [configuration documentation](../../Configuration.md).
-
-**Note:** Active Web Elements Server will restart and activate using the mathpass. Upon successful activation, the application shall start.
-
-Your setup is now complete.
-
-
-## IV. Uninstall
-
-The following completely destroys everything including the kubernetes cluster, Wolfram Application Server and all resources:
+This being the low budget one-man-band operation that it is, I'm reliant on the automated coding style enforcement and syntax checking capabilities of [pre-commit](https://pre-commit.com/), [black](https://pypi.org/project/black/) and [flake8](https://flake8.pycqa.org/), so you'll want to install these amazing tools **prior** to attempting a PR as I've also installed automated [Github Actions](https://github.com/features/actions) [CI](https://en.wikipedia.org/wiki/Continuous_integration) tools that will run these tests on all commits.
 
 ```console
-$ cd ~/WAS-Kubernetes/EnvironmentSetup/AWS/Source/terraform/was
-$ terraform init
-$ terraform destroy
+foo@bar:~$ pip install -r requirements-dev.txt
+foo@bar:~$ pre-commit install
+pre-commit installed at .git/hooks/pre-commit
+foo@bar:~$ 
+foo@bar:~$ pre-commit
 ```
 
-Delete Terraform state management resources
+![pre-commit output](https://github.com/FullStackWithLawrence/009-scikit-learn-random-forest/blob/main/doc/pre-commit.png)
 
-```console
-$ AWS_ACCOUNT=012345678912      # add your 12-digit AWS account number here
-$ AWS_REGION=us-east-1
-$ AWS_DYNAMODB_TABLE="terraform-state-lock-was"
-$ AWS_S3_BUCKET="${AWS_ACCOUNT}-terraform-tfstate-was"
-```
-
-To delete the DynamoDB table
-
-```console
-$ aws dynamodb delete-table --region $AWS_REGION --table-name $AWS_DYNAMODB_TABLE
-```
-
-To delete the AWS S3 bucket
-
-```console
-$ aws s3 rm s3://$AWS_S3_BUCKET --recursive
-$ aws s3 rb s3://$AWS_S3_BUCKET --force
-```
