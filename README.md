@@ -22,7 +22,7 @@ foo@bar:~$ terraform apply
 
 This document describes how to deploy a [Managed Kubernetes Service Cluster](https://aws.amazon.com/eks/) with [AWS cloud infrastructure](https://aws.amazon.com/).
 
-This is a [Terraform](https://www.terraform.io/) based installation methodology that reliably automates the complete build, management and destruction processes of all resources. [Terraform](https://www.terraform.io/) is an [infrastructure-as-code](https://en.wikipedia.org/wiki/Infrastructure_as_code) command line tool that will create and configure all of the approximately 120 software and cloud infrastructure resources that are needed for running WAS on Kubernetes infrastructure. These Terraform scripts will install and configure all cloud infrastructure resources and system software on which WAS depends. This process will take around 15 minutes to complete and will generate copious amounts of console output.
+This is a [Terraform](https://www.terraform.io/) based installation methodology that reliably automates the complete build, management and destruction processes of all resources. [Terraform](https://www.terraform.io/) is an [infrastructure-as-code](https://en.wikipedia.org/wiki/Infrastructure_as_code) command line tool that will create and configure all of the software and cloud infrastructure resources that are needed for running EKS. These Terraform scripts will install and configure all cloud infrastructure resources and system software on which EKS depends. This process will take around 15 minutes to complete and will generate copious amounts of console output.
 
 Terraform will create a dedicated [AWS Virtual Private Network (VPC)](https://aws.amazon.com/vpc/) to contain all other resources that it creates. This VPC serves as an additional 'chinese wall' that prevents these AWS resources and system software packages from being able to interact with any other AWS resources that might already exist in your AWS account. This additional layer is strongly recommended, and you will incur negligable additional AWS cost for adding this additional layer of security protection.
 
@@ -117,7 +117,7 @@ Use these three environment variables for creating the uniquely named resources 
 $ AWS_ACCOUNT=012345678912      # add your 12-digit AWS account number here
 $
 $ AWS_REGION=us-east-1          # any valid AWS region code.
-$ AWS_ENVIRONMENT=was           # any valid string. Keep it short -- 3 characters is ideal.
+$ AWS_ENVIRONMENT=fswl          # any valid string. Keep it short -- 3 characters is ideal.
 ```
 
 First create an AWS S3 Bucket
@@ -137,7 +137,7 @@ $ aws dynamodb create-table --region $AWS_REGION --table-name $AWS_DYNAMODB_TABL
                ReadCapacityUnits=1,WriteCapacityUnits=1
 ```
 
-## II. Build and Deploy WAS
+## II. Deploy EKS
 
 ### Step 1. Checkout the repository
 
@@ -156,13 +156,13 @@ $ cd 010-most-important-kubernetes-video/terraform/
 Edit the following snippet so that bucket, region and dynamodb_table are consistent with your values of $AWS_REGION, $AWS_S3_BUCKET, $AWS_DYNAMODB_TABLE
 
 ```console
-$ vim terraform/was/terraform.tf
+$ vim terraform/terraform.tf
 ```
 
 ```terraform
   backend "s3" {
     bucket         = "012345678912-terraform-tfstate-fswl"
-    key            = "was/terraform.tfstate"
+    key            = "fswl/terraform.tfstate"
     region         = "us-east-1"
     dynamodb_table = "terraform-state-lock-fswl"
     profile        = "default"
@@ -173,7 +173,7 @@ $ vim terraform/was/terraform.tf
 ### Step 4. Configure your environment by setting Terraform global variable values
 
 ```console
-$ vim terraform/was/terraform.tfvars
+$ vim terraform/terraform.tfvars
 ```
 
 Required inputs are as follows:
@@ -192,7 +192,7 @@ tags                 = {}
 aws_profile          = "default"
 aws_auth_users       = []
 kms_key_owners       = []
-shared_resource_name = "was"
+shared_resource_name = "fswl"
 cidr                 = "192.168.0.0/20"
 private_subnets      = ["192.168.4.0/24", "192.168.5.0/24"]
 public_subnets       = ["192.168.1.0/24", "192.168.2.0/24"]
@@ -205,7 +205,7 @@ disk_size            = 30
 instance_types       = ["t3.2xlarge", "t3a.2xlarge", "t2.2xlarge"]
 ```
 
-### Step 5. Run the following command to set up EKS and deploy WAS
+### Step 5. Run the following command to set up EKS
 
 The Terraform modules in this repo rely extensively on calls to other third party Terraform modules published and maintained by [AWS](https://registry.terraform.io/namespaces/terraform-aws-modules). These modules will be downloaded by Terraform so that these can be executed locally from your computer. Noteworth examples of such third party modules include:
 
@@ -218,7 +218,7 @@ $ terraform init
 
 Screen output should resemble the following:
 
-To deploy WAS run the following
+To deploy all resources run the following
 
 ```console
 $ terraform apply
@@ -296,7 +296,7 @@ First, configure kubectl to connect to your AWS EKS Kubernetes cluster.
 
 ```console
 $ AWS_REGION=us-east-1
-$ EKS_CLUSTER_NAME=was
+$ EKS_CLUSTER_NAME=fswl
 $ aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME --alias $EKS_CLUSTER_NAME
 ```
 
@@ -307,14 +307,12 @@ $ kubectl get namespaces
 NAME                 STATUS   AGE
 default              Active   3h
 ingress-controller   Active   101m
-kafka                Active   100m
 kube-node-lease      Active   3h
 kube-public          Active   3h
 kube-system          Active   3h
 metrics-server       Active   106m
 prometheus           Active   105m
 vpa                  Active   106m
-was                  Active   100m
 ```
 
 Run k9s from your command line
