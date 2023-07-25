@@ -316,7 +316,20 @@ $ k9s
 
 After successfully running the Terraform script the k9s home screen should look similiar to the following:
 
-![k9s home screen](https://raw.githubusercontent.com/QueriumCorp/WAS-Kubernetes/querium/EnvironmentSetup/AWS/doc/k8s-environment.png "K9s Home Screen")
+![k9s home screen](https://raw.githubusercontent.com/FullStackWithLawrence/010-most-important-kubernetes-video/blob/main/doc/k8s-environment.png "K9s Home Screen")
+
+### Step 6. Check out a real URL end point that your new cluster is hosting
+
+Coincidentally, the Prometheur Helm chart also installs an application named Grafana which includes a web-based console that will be accessible from the URL endpoint 'https://grafana.fswl.yourdomain.com'.
+
+You can retrieve your custom credentials from the following Kubernetes secrets:
+(noting that your password will be different from the value shown in the screen shot example)
+
+![Grafana credentials](https://raw.githubusercontent.com/FullStackWithLawrence/010-most-important-kubernetes-video/blob/main/doc/grafana-signin-credentials.png "Grafana Sign In")
+
+Once your logged in you should see a Grafana home page similar to the following:
+
+![Grafana home page](https://raw.githubusercontent.com/FullStackWithLawrence/010-most-important-kubernetes-video/blob/main/doc/grafana-home-page.png "Grafana Home Screen")
 
 ### Trouble Shooting
 
