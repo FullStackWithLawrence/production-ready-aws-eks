@@ -284,15 +284,6 @@ $ EKS_CLUSTER_NAME=fswl
 $ aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME --alias $EKS_CLUSTER_NAME
 ```
 
-Afterwards, you can use k9s, a text-based gui, to view and interact with Kubernetes resources. k9s relies on kubectl to
-communicate with the AWS EKS Kuberenetes cluster.
-
-```console
-$ k9s
-```
-![Up and Running](https://github.com/FullStackWithLawrence/010-most-important-kubernetes-video/blob/main/doc/up-and-running.png)
-
-
 Use this command to verify that kubectl can access Kubernetes cluster resources.
 
 ```console
@@ -308,7 +299,8 @@ prometheus           Active   105m
 vpa                  Active   106m
 ```
 
-Run k9s from your command line
+Afterwards, you can use k9s, a text-based gui, to view and interact with Kubernetes resources. k9s relies on kubectl to communicate with the AWS EKS Kuberenetes cluster.
+
 
 ```console
 $ k9s
