@@ -5,7 +5,7 @@
 
 # The Most Important Kubernetes Video You'll Ever Watch
 
-This is the source code for FullStackWithLawrence Youtube Video -- "????".
+This is the source code for FullStackWithLawrence Youtube Video, [The Most Important Kubernetes Video - Part I](https://www.youtube.com/watch?v=vVgUT4okdsY).
 
 Terraform scaffolding to create a production-ready Kubernetes cluster running inside its own VPC. Sets up spot pricing for EC2 instances, and installs and configures commonly needed packages including:
 
