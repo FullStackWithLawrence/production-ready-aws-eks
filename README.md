@@ -5,7 +5,7 @@
 
 # Production-Ready AWS Elastic Kubernetes Service
 
-This is the source code for my [Blog Article](https://blog.lawrencemcdaniel.com/production-ready-aws-elastic-kubernetes-service/) and FullStackWithLawrence Youtube Video, [Production-Ready AWS Elastic Kubernetes Service](https://www.youtube.com/watch?v=vVgUT4okdsY).
+This is the source code for my [Blog Article](https://blog.lawrencemcdaniel.com/production-ready-aws-elastic-kubernetes-service/) and [FullStackWithLawrence Youtube Video](https://www.youtube.com/watch?v=vVgUT4okdsY).
 
 [![Watch the video](https://i3.ytimg.com/vi/vVgUT4okdsY/maxresdefault.jpg)](https://www.youtube.com/watch?v=vVgUT4okdsY)
 
