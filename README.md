@@ -3,9 +3,11 @@
 [![AGPL License](https://img.shields.io/github/license/overhangio/tutor.svg?style=flat-square)](https://www.gnu.org/licenses/agpl-3.0.en.html)
 [![hack.d Lawrence McDaniel](https://img.shields.io/badge/hack.d-Lawrence%20McDaniel-orange.svg)](https://lawrencemcdaniel.com)
 
-# The Most Important Kubernetes Video You'll Ever Watch
+# Production-Ready AWS Elastic Kubernetes Service
 
-This is the source code for FullStackWithLawrence Youtube Video, [The Most Important Kubernetes Video - Part I](https://www.youtube.com/watch?v=vVgUT4okdsY).
+This is the source code for my [Blog Article](https://blog.lawrencemcdaniel.com/production-ready-aws-elastic-kubernetes-service/) and FullStackWithLawrence Youtube Video, [Production-Ready AWS Elastic Kubernetes Service](https://www.youtube.com/watch?v=vVgUT4okdsY).
+
+[![Watch the video](https://i3.ytimg.com/vi/vVgUT4okdsY/maxresdefault.jpg)](https://www.youtube.com/watch?v=vVgUT4okdsY)
 
 Terraform scaffolding to create a production-ready Kubernetes cluster running inside its own VPC. Sets up spot pricing for EC2 instances, and installs and configures commonly needed packages including:
 
