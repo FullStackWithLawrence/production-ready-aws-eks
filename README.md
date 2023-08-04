@@ -1,4 +1,4 @@
-[![Source code](https://img.shields.io/static/v1?logo=github&label=Git&style=flat-square&color=brightgreen&message=Source%20code)](https://github.com/FullStackWithLawrence/production-ready-aws-eks)
+[![Source code](https://img.shields.io/static/v1?logo=youtube&label=YouTube&style=flat-square&color=red&message=Video)](https://www.youtube.com/watch?v=vVgUT4okdsY)
 [![Documentation](https://img.shields.io/static/v1?&label=Documentation&style=flat-square&color=000000&message=Documentation)](https://blog.lawrencemcdaniel.com/production-ready-aws-elastic-kubernetes-service/)
 [![AGPL License](https://img.shields.io/github/license/overhangio/tutor.svg?style=flat-square)](https://www.gnu.org/licenses/agpl-3.0.en.html)
 [![hack.d Lawrence McDaniel](https://img.shields.io/badge/hack.d-Lawrence%20McDaniel-orange.svg)](https://lawrencemcdaniel.com)
