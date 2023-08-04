@@ -93,15 +93,15 @@ Ensure that your environment includes the latest stable releases of the followin
 If necessary, install [Homebrew](https://brew.sh/)
 
 ```console
-$ /bin/bash -c "$(curl -fsSL https://github.com//Homebrew/install/HEAD/install.sh)"
-$ echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/ubuntu/.profile
-$ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+/bin/bash -c "$(curl -fsSL https://github.com//Homebrew/install/HEAD/install.sh)"
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/ubuntu/.profile
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 ```
 
 Use homebrew to install all required packages.
 
 ```console
-$ brew install awscli kubernetes-cli terraform helm k9s
+brew install awscli kubernetes-cli terraform helm k9s
 ```
 
 ### Configure the AWS CLI
@@ -109,7 +109,7 @@ $ brew install awscli kubernetes-cli terraform helm k9s
 To configure the AWS CLI run the following command:
 
 ```console
-$ aws configure
+aws configure
 ```
 
 This will interactively prompt for your AWS IAM user access key, secret key and preferred region.
@@ -121,13 +121,13 @@ Helm helps you manage Kubernetes applications. Based on yaml 'charts', Helm help
 Helm charts first need to be downloaded and added to your local Helm repository. The helm charts will be automatically executed by Terraform at the appropriate time, so there is nothing further that you need to do beyond adding these charts to your local helm repository.
 
 ```console
-$ helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver/
-$ helm repo add jetstack https://charts.jetstack.io
-$ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-$ helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
-$ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts/
-$ helm repo add cowboysysop https://cowboysysop.github.io/charts/
-$ helm repo update
+helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver/
+helm repo add jetstack https://charts.jetstack.io
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts/
+helm repo add cowboysysop https://cowboysysop.github.io/charts/
+helm repo update
 ```
 
 ### Setup Terraform
@@ -139,10 +139,10 @@ Use these three environment variables for creating the uniquely named resources 
 **IMPORTANT: these three settings should be consistent with the values your set in terraform.tfvars in the next section.**
 
 ```console
-$ AWS_ACCOUNT=012345678912      # add your 12-digit AWS account number here
-$ AWS_PROFILE=default           # any valid aws cli profile name
-$ AWS_REGION=us-east-1          # any valid AWS region code.
-$ AWS_ENVIRONMENT=fswl          # any valid string. Keep it short -- 3 characters is ideal.
+AWS_ACCOUNT=012345678912      # add your 12-digit AWS account number here
+AWS_PROFILE=default           # any valid aws cli profile name
+AWS_REGION=us-east-1          # any valid AWS region code.
+AWS_ENVIRONMENT=fswl          # any valid string. Keep it short -- 3 characters is ideal.
 ```
 
 To verify your AWS CLI identify
@@ -155,7 +155,7 @@ aws sts get-caller-identity
 If necessary you can force the aws cli to recoginize your aws profile name with this command.
 
 ```console
-echo AWS_PROFILE=default
+export AWS_PROFILE=default
 aws sts get-caller-identity
 ```
 
@@ -164,15 +164,15 @@ The IAM user returned in the console output should match the IAM username you se
 Next create an AWS S3 Bucket
 
 ```console
-$ AWS_S3_BUCKET="${AWS_ACCOUNT}-terraform-tfstate-${AWS_ENVIRONMENT}"
-$ aws s3api create-bucket --bucket $AWS_S3_BUCKET --region $AWS_REGION --profile $AWS_PROFILE
+AWS_S3_BUCKET="${AWS_ACCOUNT}-terraform-tfstate-${AWS_ENVIRONMENT}"
+aws s3api create-bucket --bucket $AWS_S3_BUCKET --region $AWS_REGION --profile $AWS_PROFILE --create-bucket-configuration LocationConstraint=$AWS_REGION
 ```
 
 Then create a DynamoDB table
 
 ```console
-$ AWS_DYNAMODB_TABLE="terraform-state-lock-${AWS_ENVIRONMENT}"
-$ aws dynamodb create-table --profile $AWS_PROFILE --region $AWS_REGION --table-name $AWS_DYNAMODB_TABLE  \
+AWS_DYNAMODB_TABLE="terraform-state-lock-${AWS_ENVIRONMENT}"
+aws dynamodb create-table --profile $AWS_PROFILE --region $AWS_REGION --table-name $AWS_DYNAMODB_TABLE  \
                --attribute-definitions AttributeName=LockID,AttributeType=S  \
                --key-schema AttributeName=LockID,KeyType=HASH --provisioned-throughput  \
                ReadCapacityUnits=1,WriteCapacityUnits=1
@@ -183,13 +183,13 @@ $ aws dynamodb create-table --profile $AWS_PROFILE --region $AWS_REGION --table-
 ### Step 1. Checkout the repository
 
 ```console
-$ git clone https://github.com/FullStackWithLawrence/010-most-important-kubernetes-video.git
+git clone https://github.com/FullStackWithLawrence/010-most-important-kubernetes-video.git
 ```
 
 ### Step 2. Change directory to terraform
 
 ```console
-$ cd 010-most-important-kubernetes-video/terraform/
+cd 010-most-important-kubernetes-video/terraform/
 ```
 
 ### Step 3. Configure your Terraform backend
@@ -197,7 +197,7 @@ $ cd 010-most-important-kubernetes-video/terraform/
 Edit the following snippet so that bucket, region and dynamodb_table are consistent with your values of $AWS_REGION, $AWS_S3_BUCKET, $AWS_DYNAMODB_TABLE
 
 ```console
-$ vim terraform/terraform.tf
+vim terraform/terraform.tf
 ```
 
 ```terraform
@@ -214,7 +214,7 @@ $ vim terraform/terraform.tf
 ### Step 4. Configure your environment by setting Terraform global variable values
 
 ```console
-$ vim terraform/terraform.tfvars
+vim terraform/terraform.tfvars
 ```
 
 Required inputs are as follows:
@@ -254,7 +254,7 @@ The Terraform modules in this repo rely extensively on calls to other third part
 * [terraform-aws-modules/eks](https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest)
 
 ```console
-$ terraform init
+terraform init
 ```
 
 Screen output should resemble the following:
@@ -264,16 +264,16 @@ Screen output should resemble the following:
 To deploy all resources run the following
 
 ```console
-$ terraform apply
+terraform apply
 ```
 
 You can optionally run Terraform modules individually. Some examples include
 
 ```console
-$ terraform apply -target=module.eks
-$ terraform apply -target=module.metricsserver
-$ terraform apply -target=module.prometheus
-$ terraform apply -target=module.ingress_controller
+terraform apply -target=module.eks
+terraform apply -target=module.metricsserver
+terraform apply -target=module.prometheus
+terraform apply -target=module.ingress_controller
 ```
 
 ### Step 5. Interact with the AWS EKS Kubernetes cluster
@@ -281,9 +281,9 @@ $ terraform apply -target=module.ingress_controller
 the AWS CLI provides a handy command-line tool for configuring kubectl for your new AWS EKS Kubernetes cluster. 
 
 ```console
-$ AWS_REGION=us-east-1
-$ EKS_CLUSTER_NAME=fswl
-$ aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME --alias $EKS_CLUSTER_NAME
+AWS_REGION=us-east-1
+EKS_CLUSTER_NAME=fswl
+aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME --alias $EKS_CLUSTER_NAME
 ```
 
 Use this command to verify that kubectl can access Kubernetes cluster resources.
@@ -305,7 +305,7 @@ Afterwards, you can use k9s, a text-based gui, to view and interact with Kuberne
 
 
 ```console
-$ k9s
+k9s
 ```
 
 After successfully running the Terraform script the k9s home screen should look similiar to the following:
@@ -370,7 +370,7 @@ Terraform sets a 'lock' in the AWS DynamoDB table that you created in the Terraf
 You can optionally execute the Terraform scripts without a lock, as follows:
 
 ```console
-$ terraform apply -lock=false
+terraform apply -lock=false
 ```
 
 
